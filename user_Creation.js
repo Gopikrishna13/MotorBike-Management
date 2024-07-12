@@ -19,17 +19,19 @@ function validate(e) {
         let Manager_username = document.getElementById("M_username").value.trim();
         let Manager_passwd = document.getElementById("M_password").value.trim();
         let Manager_nic = document.getElementById("M_NIC").value.trim();
+        let Manager_mobile = document.getElementById("M_Mobile").value.trim();
 
         if (checkManager(Manager_username)) {
             alert("Username already exists! Please choose another username.");
+            location.reload();
             return;
         }
 
         if (Manager_username.startsWith("M")) {
             if (Manager_passwd.length >= 8) {
-                Store_Manager(Manager_username, Manager_passwd, Manager_nic);
+                Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile);
                 alert("Manager account created successfully!");
-                window.location.href = "Manager_Dashboard.html";
+                window.location.href = "Login.html";
             } else {
                 document.getElementById("manager_password").textContent = "Invalid Password Length (should be at least 8 characters)";
             }
@@ -41,16 +43,19 @@ function validate(e) {
         let User_Pwd = document.getElementById("U_password").value.trim();
         let NIC = document.getElementById("U_NIC").value.trim();
         let License = document.getElementById("License").value.trim();
+        let User_mobile = document.getElementById("U_Mobile").value.trim();
 
         if (checkUser(User_Name)) {
             alert("Username already exists! Please choose another username.");
+            location.reload();
             return;
         }
 
         if (User_Name.startsWith("U")) {
             if (User_Pwd.length >= 8) {
-                Store_User(User_Name, User_Pwd, NIC, License);
+                Store_User(User_Name, User_Pwd, NIC, License, User_mobile);
                 alert("User account created successfully!");
+                window.location.href = "Login.html";
             } else {
                 document.getElementById("user_password").textContent = "Invalid Password Length (should be at least 8 characters)";
             }
@@ -63,7 +68,7 @@ function validate(e) {
 function checkManager(Manager_username) {
     const Manager_details = JSON.parse(localStorage.getItem("Manager_Details")) || [];
     for (const manager of Manager_details) {
-        if (manager.User_Name === Manager_username) {
+        if (manager.UserName === Manager_username) {
             return true; // Username already exists
         }
     }
@@ -73,19 +78,20 @@ function checkManager(Manager_username) {
 function checkUser(User_Name) {
     const User_details = JSON.parse(localStorage.getItem("User_Details")) || [];
     for (const user of User_details) {
-        if (user.User_Name === User_Name) {
+        if (user.UserName === User_Name) {
             return true; // Username already exists
         }
     }
     return false; // Username does not exist
 }
 
-function Store_Manager(Manager_username, Manager_passwd, Manager_nic) {
+function Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile) {
     const M_password = encrypt_password(Manager_passwd);
     const Manager = {
-        User_Name: Manager_username,
+        UserName: Manager_username,
         Password: M_password,
-        NIC: Manager_nic
+        NIC: Manager_nic,
+        Mobile: Manager_mobile
     };
 
     let Manager_details = JSON.parse(localStorage.getItem("Manager_Details")) || [];
@@ -93,13 +99,14 @@ function Store_Manager(Manager_username, Manager_passwd, Manager_nic) {
     localStorage.setItem("Manager_Details", JSON.stringify(Manager_details));
 }
 
-function Store_User(User_Name, User_Pwd, NIC, License) {
+function Store_User(User_Name, User_Pwd, NIC, License, User_mobile) {
     const U_password = encrypt_password(User_Pwd);
     const User = {
-        User_Name: User_Name,
+        UserName: User_Name,
         Password: U_password,
         NIC: NIC,
-        License: License
+        License: License,
+        Mobile: User_mobile
     };
 
     let User_details = JSON.parse(localStorage.getItem("User_Details")) || [];
@@ -108,5 +115,5 @@ function Store_User(User_Name, User_Pwd, NIC, License) {
 }
 
 function encrypt_password(password) {
-    return window.btoa(password); 
+    return window.btoa(password);
 }
