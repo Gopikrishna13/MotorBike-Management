@@ -60,7 +60,7 @@ function searchBike() {
                 <td>${data.Registration_Number}</td>
                 <td>${data.Rent}</td>
                 <td>
-                    <button onclick="updateData(${data.ID})">Update</button>
+                    <button onclick="updateData(${data.ID}) " >Update</button>
                     <button onclick="deleteData(${data.ID})">Delete</button>
                 </td>
             </tr>`;
@@ -70,8 +70,9 @@ function searchBike() {
     document.getElementById("Bike_table").innerHTML = table;
 }
 
-function createBike(e) {
-    e.preventDefault();
+
+function createBike() {
+   
     const bike_type = document.getElementById("bike_type").value;
     const bike_brand = document.getElementById("bike_brand").value;
     const bike_year = document.getElementById("bike_year").value;
@@ -147,85 +148,7 @@ function deleteData(data) {
 }
 
 function updateData(id) {
-    let bike = JSON.parse(localStorage.getItem("Bike_Details")) || [];
-    bike = bike.find(item => item.ID === id); 
-
-    let formHTML = `
-        <form id="update_form">
-            <label for="bike_type_update">Type</label>
-            <input type="text" id="bike_type_update" value="${bike.Type}" required><br><br>
-
-            <label for="bike_brand_update">Brand</label>
-            <input type="text" id="bike_brand_update" value="${bike.Brand}" required><br><br>
-
-            <label for="bike_year_update">Year</label>
-            <input type="text" id="bike_year_update" value="${bike.Year}" required><br><br>
-
-            <label for="bike_reg_update">Registration Number</label>
-            <input type="text" id="bike_reg_update" value="${bike.Registration_Number}" required><br><br>
-
-            <label for="bike_price_update">Rent</label>
-            <input type="number" id="bike_price_update" value="${bike.Rent}" required><br><br>
-
-            <label for="bike_qty_update">Quantity</label>
-            <input type="number" id="bike_qty_update" value="${bike.Quantity}" required><br><br>
-
-            <label for="bike_img_update">Image</label>
-            <input type="file" id="bike_img_update"><br><br>
-
-            <input type="submit" id="update_detail" value="Update">
-            <input type="button" id="update_detail_cancel" value="Cancel">
-        </form>
-    `;
-
-    document.getElementById("bike_container").innerHTML = formHTML;
-
-    document.getElementById("update_form").addEventListener("submit", function(e) {
-        e.preventDefault();
-       
-        const updated_bike = {
-            ID: bike.ID,
-            Type: document.getElementById("bike_type_update").value,
-            Brand: document.getElementById("bike_brand_update").value,
-            Year: document.getElementById("bike_year_update").value,
-            Registration_Number: document.getElementById("bike_reg_update").value,
-            Rent: document.getElementById("bike_price_update").value,
-            Quantity: document.getElementById("bike_qty_update").value,
-            Image: document.getElementById("bike_img_update").files[0] || bike.Image // Use existing image if not updated
-        };
-
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            updated_bike.Image = event.target.result;
-            let bikes = JSON.parse(localStorage.getItem("Bike_Details")) || [];
-            bikes = bikes.map(item => {
-                if (item.ID === updated_bike.ID) {
-                    return updated_bike;
-                }
-                return item;
-            });
-            localStorage.setItem("Bike_Details", JSON.stringify(bikes));
-            displayBikes();
-            document.getElementById("bike_form").style.display = "none";
-        };
-        if (updated_bike.Image) {
-            reader.readAsDataURL(updated_bike.Image);
-        } else {
-            // If no new image, just update without reading as data URL
-            let bikes = JSON.parse(localStorage.getItem("Bike_Details")) || [];
-            bikes = bikes.map(item => {
-                if (item.ID === updated_bike.ID) {
-                    return updated_bike;
-                }
-                return item;
-            });
-            localStorage.setItem("Bike_Details", JSON.stringify(bikes));
-            displayBikes();
-            document.getElementById("bike_form").style.display = "none";
-        }
-    });
-
-    document.getElementById("update_detail_cancel").addEventListener("click", function() {
-        document.getElementById("bike_container").innerHTML = ""; // Clear update form container
-    });
+sessionStorage.setItem("ID",id);
+window.location.href="update_bike.html";
+      
 }

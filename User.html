@@ -39,5 +39,40 @@
         <li><a href="update_User.html">Settings</a></li>
       </ul>
 </body>
-<script src="update_Profile.js"></script>
+
+<div id="bike_details">
+
+</div>
+<!-- <script src="update_Profile.js"></script> -->
 </html>
+
+<script>
+  document.addEventListener("DOMContentLoaded",()=>{
+    const display = JSON.parse(localStorage.getItem("Bike_Details")) || [];
+    let table = `
+        <table>  
+            <tr>
+             
+           
+            </tr>`;
+
+    for (const data of display) {
+        table += `
+            <tr>
+                <td>${data.ID} <br>
+                  <img src="${data.Image}" width="50"><br>
+                  ${data.Type}<br>
+                  ${data.Brand}<br>
+                  ${data.Year}<br>
+                  ${data.Registration_Number}<br>
+                  ${data.Rent}
+                  </td>
+                
+               
+            </tr>`;
+    }
+
+    table += `</table>`;
+    document.getElementById("bike_details").innerHTML = table;
+  })
+</script>
