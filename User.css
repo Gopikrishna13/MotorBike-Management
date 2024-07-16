@@ -85,7 +85,7 @@ li a:hover {
     margin: 20px 0;
 }
 
-#search input {
+#search input[type="search"] {
     padding: 10px;
     margin-right: 10px;
     border: 1px solid #ddd;
@@ -103,4 +103,32 @@ li a:hover {
 
 #search button:hover {
     background-color: #555;
+}
+
+#search input[type="range"] {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 5px;
+    background: #ddd;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+#search input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer;
+}
+
+#search input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer;
 }
