@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         document.getElementById("update_detail_cancel").addEventListener("click", () => {
-            window.location.href = "inventory.html"; // Redirect back to inventory page
+            window.location.href = "inventory.html"; 
         });
     } else {
         alert("Bike not found");

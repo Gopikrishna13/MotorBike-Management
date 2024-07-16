@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById("search_btn").addEventListener("click", function() {
-        searchBike(); // Corrected function call without parentheses ()
+        searchBike(); 
     });
 
     document.getElementById("bike_form").addEventListener("submit", function(e) {

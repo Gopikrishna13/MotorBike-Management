@@ -3,76 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bike Details</title>
 
-    <style>
-        ul {
-          list-style-type: none;
-          margin: 0;
-          padding: 0;
-          overflow: hidden;
-          background-color: #333;
-        }
-        
-        li {
-          float: left;
-        }
-        
-        li a {
-          display: block;
-          color: white;
-          text-align: center;
-          padding: 14px 16px;
-          text-decoration: none;
-        }
-        
-        li a:hover {
-          background-color: #111;
-        }
-        </style>
+    <link rel="stylesheet" href="User.css">
 </head>
 <body>
     <ul>
         <li><a class="active" href="#home">Home</a></li>
-       
         <li><a href="">Rental History</a></li>
         <li><a href="update_User.html">Settings</a></li>
-      </ul>
+    </ul>
+
+    <br>
+    <div id="search">
+      <input type="search" placeholder="Type" id="search_type">
+      <input type="search" placeholder="Brand" id="search_brand">
+      <input type="search" placeholder="Rent" id="search_rent">
+      <button id="search_btn" onclick="searchBike()">Search</button>
+    </div>
+    <div id="bike_details">
+        <!-- Bike details table will be dynamically populated here -->
+    </div>
+
+    <script src="User.js"></script>
 </body>
-
-<div id="bike_details">
-
-</div>
-<!-- <script src="update_Profile.js"></script> -->
 </html>
-
-<script>
-  document.addEventListener("DOMContentLoaded",()=>{
-    const display = JSON.parse(localStorage.getItem("Bike_Details")) || [];
-    let table = `
-        <table>  
-            <tr>
-             
-           
-            </tr>`;
-
-    for (const data of display) {
-        table += `
-            <tr>
-                <td>${data.ID} <br>
-                  <img src="${data.Image}" width="50"><br>
-                  ${data.Type}<br>
-                  ${data.Brand}<br>
-                  ${data.Year}<br>
-                  ${data.Registration_Number}<br>
-                  ${data.Rent}
-                  </td>
-                
-               
-            </tr>`;
-    }
-
-    table += `</table>`;
-    document.getElementById("bike_details").innerHTML = table;
-  })
-</script>
