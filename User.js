@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const bike_price=JSON.parse(localStorage.getItem("Bike_Details")) || [];
+const bike_price=JSON.parse(localStorage.getItem("Bike_Details")) || [];
 const bike_rent=bike_price.map(bike=>bike.Rent);
 let min=(Math.min(...bike_rent));
 let max=(Math.max(...bike_rent));
@@ -49,6 +49,6 @@ function searchBike() {
 }
 
 function viewBike(id) {
-  sessionStorage.setItem("BikeID",id);
+  localStorage.setItem("BikeID",id);
   window.location.href="Userview.html";
 }
