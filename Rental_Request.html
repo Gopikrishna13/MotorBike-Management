@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-           body {
+        body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
@@ -55,62 +55,43 @@
 </head>
 <body>
     <div id="request_details">
-
+        <!-- Table will be inserted here -->
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const req_details = JSON.parse(localStorage.getItem("Request_Info")) || [];
+            console.log(req_details);
+
+            let table = `
+                <table>
+                    <tr> 
+                        <th>BikeID</th>
+                        <th>UserID</th>
+                        <th>From</th>
+                        <th>Time</th>
+                        <th>To</th>
+                        <th>Action</th>
+                    </tr>`;
+
+            for (const details of req_details) {
+                table += `
+                    <tr>
+                        <td>${details.BikeID}</td>
+                        <td>${details.User}</td>
+                        <td>${details.From}</td>
+                        <td>${details.Time}</td>
+                        <td>${details.Return}</td>
+                        <td>
+                            <button class="action-btn">Accept</button>
+                            <button class="action-btn">Decline</button>
+                        </td>
+                    </tr>`;
+            }
+
+            table += `</table>`;
+            document.getElementById("request_details").innerHTML = table;
+        });
+    </script>
 </body>
 </html>
-
-<script>
-    document.addEventListener("DOMContentLoaded",()=>{
-        const userName= JSON.parse(localStorage.getItem("Customer_Name")) || [];
-    const bikeID= JSON.parse(localStorage.getItem("BikeID")) || [];
-
-
-    const user_details= JSON.parse(localStorage.getItem("User_Details")) || [];
-    const bike_details=JSON.parse(localStorage.getItem("Bike_Details"))|| [];
-
-    const display_user=user_details.filter(user=>user.UserName===userName);
-    const display_bike=bike_details.filter(bike=>bike.ID===bikeID);
-
-    let table=`
-    <table>
-        <tr> 
-        <th>BikeID</th>
-        <th>Image</th>
-        <th>UserID</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Action</th>
-         </tr>`;
-
-
-  
-  
-    for(let i=0;i<display_bike.length;++i)
-{
-    table+=
-`<tr>
-    <td>${display_bike[i].ID}</td>
-    <td><img src="${display_bike[i].Image}" width="40"></td> `
-}
-
-
-for(let i=0;i<display_user.length;++i)
-{
-    table+=
-
-    `<td>${display_user[i].UserName}</td>`
- 
-}
-
-`<td></td>
-<td></td>
-
-  </tr>`
-table=table+`</table>`;  
-         document.getElementById("request_details").innerHTML=table;
-    })
-
-
-
-</script>

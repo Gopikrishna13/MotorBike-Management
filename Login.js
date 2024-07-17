@@ -8,7 +8,7 @@ function login_validate(event) {
     if (username.startsWith("M")) {
         const m_login = manager_Login(username, password);
         if (m_login) {
-            localStorage.setItem("Manager_Name", JSON.stringify(username));
+            sessionStorage.setItem("Manager_Name", username);
             window.location.href = "Manager_Dashboard.html"; // Redirect to manager dashboard
         } else {
             document.getElementById("response").innerHTML = "Login Failed";
@@ -16,7 +16,7 @@ function login_validate(event) {
     } else if (username.startsWith("U")) {
         const u_login = user_Login(username, password);
         if (u_login) {
-            localStorage.setItem("Customer_Name", JSON.stringify(username));
+            sessionStorage.setItem("Customer_Name", username);
             window.location.href = "User.html"; // Redirect to user page
         } else {
             document.getElementById("response").innerHTML = "Login Failed";

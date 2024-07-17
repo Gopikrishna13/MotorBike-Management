@@ -49,6 +49,6 @@ function searchBike() {
 }
 
 function viewBike(id) {
-  localStorage.setItem("BikeID",id);
+  sessionStorage.setItem("BikeID",id);
   window.location.href="Userview.html";
 }
