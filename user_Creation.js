@@ -20,6 +20,7 @@ function validate(e) {
         let Manager_passwd = document.getElementById("M_password").value.trim();
         let Manager_nic = document.getElementById("M_NIC").value.trim();
         let Manager_mobile = document.getElementById("M_Mobile").value.trim();
+        let Manager_email=document.getElementById("M_Email").value.trim();
 
         if (checkManager(Manager_username)) {
             alert("Username already exists! Please choose another username.");
@@ -29,7 +30,7 @@ function validate(e) {
 
         if (Manager_username.startsWith("M")) {
             if (Manager_passwd.length >= 8) {
-                Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile);
+                Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile,Manager_email);
                 alert("Manager account created successfully!");
                 window.location.href = "Login.html";
             } else {
@@ -44,6 +45,7 @@ function validate(e) {
         let NIC = document.getElementById("U_NIC").value.trim();
         let License = document.getElementById("License").value.trim();
         let User_mobile = document.getElementById("U_Mobile").value.trim();
+        let User_email=document.getElementById("U_Email").value.trim();
 
         if (checkUser(User_Name)) {
             alert("Username already exists! Please choose another username.");
@@ -53,7 +55,7 @@ function validate(e) {
 
         if (User_Name.startsWith("U")) {
             if (User_Pwd.length >= 8) {
-                Store_User(User_Name, User_Pwd, NIC, License, User_mobile);
+                Store_User(User_Name, User_Pwd, NIC, License, User_mobile,User_email);
                 alert("User account created successfully!");
                 window.location.href = "Login.html";
             } else {
@@ -85,13 +87,15 @@ function checkUser(User_Name) {
     return false; // Username does not exist
 }
 
-function Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile) {
+function Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile,Manager_Email) {
     const M_password = encrypt_password(Manager_passwd);
     const Manager = {
+        ID: Math.floor(Math.random() * (1000000 - 1)) + 1,
         UserName: Manager_username,
         Password: M_password,
         NIC: Manager_nic,
-        Mobile: Manager_mobile
+        Mobile: Manager_mobile,
+        Email:Manager_Email
     };
 
     let Manager_details = JSON.parse(localStorage.getItem("Manager_Details")) || [];
@@ -99,14 +103,16 @@ function Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mo
     localStorage.setItem("Manager_Details", JSON.stringify(Manager_details));
 }
 
-function Store_User(User_Name, User_Pwd, NIC, License, User_mobile) {
+function Store_User(User_Name, User_Pwd, NIC, License, User_mobile,User_email) {
     const U_password = encrypt_password(User_Pwd);
     const User = {
+        ID: Math.floor(Math.random() * (1000000 - 1)) + 1,
         UserName: User_Name,
         Password: U_password,
         NIC: NIC,
         License: License,
-        Mobile: User_mobile
+        Mobile: User_mobile,
+        Email:User_email
     };
 
     let User_details = JSON.parse(localStorage.getItem("User_Details")) || [];

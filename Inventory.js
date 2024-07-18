@@ -25,12 +25,15 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function searchBike() {
+  
     const type = document.getElementById("type_search").value.toLowerCase();
     const brand = document.getElementById("brand_search").value.toLowerCase();
     const year = document.getElementById("year_search").value.toLowerCase();
+    const id=Number(document.getElementById("idsearch").value);
 
     let bike = JSON.parse(localStorage.getItem("Bike_Details")) || [];
     bike = bike.filter(item => 
+        (id===0 || item.ID===id)&&
         (type === "" || item.Type.toLowerCase().includes(type)) &&
         (brand === "" || item.Brand.toLowerCase().includes(brand)) &&
         (year === "" || item.Year.toLowerCase().includes(year))
