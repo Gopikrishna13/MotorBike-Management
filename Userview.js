@@ -36,12 +36,14 @@ function Request(id,uName)
 let return_info=returnDate();
 
 const reuquest_details={
+    RequestID:Math.floor(Math.random() * (1000000 - 1)) + 1,
     BikeID:id,
     User:uName,
-    Image:`<img src="${display.Image}" width="100">`,
+   
     From:document.getElementById("date").value,
     Time:document.getElementById("time").value,
-    Return:return_info
+    Return:return_info,
+    Status:0
 }
  let request=JSON.parse(localStorage.getItem(("Request_Info")))|| [];
  request.push(reuquest_details);

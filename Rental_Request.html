@@ -4,95 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .action-btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .action-btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <link rel="stylesheet" href="Rental_Request.css">
 </head>
 <body>
     <div id="request_details">
-        <!-- Table will be inserted here -->
+        
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const req_details = JSON.parse(localStorage.getItem("Request_Info")) || [];
-            console.log(req_details);
-
-            let table = `
-                <table>
-                    <tr> 
-                        <th>BikeID</th>
-                        <th>UserID</th>
-                        
-                        <th>From</th>
-                        <th>Time</th>
-                        <th>To</th>
-                        <th>Action</th>
-                    </tr>`;
-
-            for (const details of req_details) {
-                table += `
-                    <tr>
-                        <td>${details.BikeID}</td>
-                        <td>${details.User}</td>
-                        <td>${details.From}</td>
-                        <td>${details.Time}</td>
-                        <td>${details.Return}</td>
-                        <td>
-                            <button class="action-btn">Accept</button>
-                            <button class="action-btn">Decline</button>
-                        </td>
-                    </tr>`;
-            }
-
-            table += `</table>`;
-            document.getElementById("request_details").innerHTML = table;
-        });
-    </script>
+    <script src="Rental_Request.js"></script>
 </body>
 </html>
