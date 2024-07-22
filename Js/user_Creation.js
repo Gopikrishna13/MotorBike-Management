@@ -28,7 +28,7 @@ function validate(e) {
             return;
         }
 
-        if (Manager_username.startsWith("M")) {
+        if (Manager_username.startsWith("MT")) {
             if (Manager_passwd.length >= 8) {
                 Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile,Manager_email);
                 alert("Manager account created successfully!");
@@ -53,7 +53,7 @@ function validate(e) {
             return;
         }
 
-        if (User_Name.startsWith("U")) {
+        if (User_Name.startsWith("UT")) {
             if (User_Pwd.length >= 8) {
                 Store_User(User_Name, User_Pwd, NIC, License, User_mobile,User_email);
                 alert("User account created successfully!");
@@ -67,6 +67,7 @@ function validate(e) {
     }
 }
 
+//check Manager user name already exists
 function checkManager(Manager_username) {
     const Manager_details = JSON.parse(localStorage.getItem("Manager_Details")) || [];
     for (const manager of Manager_details) {
@@ -77,6 +78,7 @@ function checkManager(Manager_username) {
     return false; // Username does not exist
 }
 
+//check User Name already Exist
 function checkUser(User_Name) {
     const User_details = JSON.parse(localStorage.getItem("User_Details")) || [];
     for (const user of User_details) {
@@ -87,8 +89,9 @@ function checkUser(User_Name) {
     return false; // Username does not exist
 }
 
+//store Manager Details
 function Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile,Manager_Email) {
-    const M_password = encrypt_password(Manager_passwd);
+    const M_password = encrypt_password(Manager_passwd);//Encrypt password return
     const Manager = {
         ID: Math.floor(Math.random() * (1000000 - 1)) + 1,
         UserName: Manager_username,
@@ -102,7 +105,7 @@ function Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mo
     Manager_details.push(Manager);
     localStorage.setItem("Manager_Details", JSON.stringify(Manager_details));
 }
-
+//Store user details
 function Store_User(User_Name, User_Pwd, NIC, License, User_mobile,User_email) {
     const U_password = encrypt_password(User_Pwd);
     const User = {
@@ -120,6 +123,7 @@ function Store_User(User_Name, User_Pwd, NIC, License, User_mobile,User_email) {
     localStorage.setItem("User_Details", JSON.stringify(User_details));
 }
 
+//Encrypt Password
 function encrypt_password(password) {
     return window.btoa(password);
 }

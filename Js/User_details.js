@@ -1,41 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 18px;
-            text-align: left;
-        }
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-    </style>
-</head>
-<body>
-    <input type="search" id="ID_search" placeholder="ID">
-    <input type="search" id="UName_search" placeholder="User Name">
-    <button id="search_btn">Search</button>
-    <div id="user_details">
-        <table id="user_table"></table>
-    </div>
-    <script>
-        const user_details = JSON.parse(localStorage.getItem("User_Details")) || [];
+const user_details = JSON.parse(localStorage.getItem("User_Details")) || [];
 document.addEventListener("DOMContentLoaded",displayUsers(user_details));
 
 function displayUsers(user_details)
@@ -86,8 +49,3 @@ document.getElementById("search_btn").addEventListener('click', () => {
                 displayUsers(find_user);
            
         });
-
-      
-    </script>
-</body>
-</html>

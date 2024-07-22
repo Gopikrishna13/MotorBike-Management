@@ -5,15 +5,16 @@ function login_validate(event) {
     let username = document.getElementById("Username").value;
     let password = document.getElementById("password").value;
 
-    if (username.startsWith("M")) {
+    if (username.startsWith("MT")) {
         const m_login = manager_Login(username, password);
         if (m_login) {
             sessionStorage.setItem("Manager_Name", username);
+           
             window.location.href = "Manager_Dashboard.html"; // Redirect to manager dashboard
         } else {
             document.getElementById("response").innerHTML = "Login Failed";
         }
-    } else if (username.startsWith("U")) {
+    } else if (username.startsWith("UT")) {
         const u_login = user_Login(username, password);
         if (u_login) {
             sessionStorage.setItem("Customer_Name", username);
@@ -27,6 +28,7 @@ function login_validate(event) {
 }
 
 function manager_Login(username, password) {
+    //check uer name exist
     const manager_details = JSON.parse(localStorage.getItem("Manager_Details"));
     if (!manager_details) {
         console.error("No manager details found in localStorage");
@@ -34,7 +36,7 @@ function manager_Login(username, password) {
     }
 
     const E_mpasswd = encrypt_password(password);
-
+//check pasword match
     for (const manager of manager_details) {
         if (manager.UserName === username && manager.Password === E_mpasswd) {
             return true;
@@ -44,6 +46,7 @@ function manager_Login(username, password) {
 }
 
 function user_Login(username, password) {
+    //check user name exist
     const user_details = JSON.parse(localStorage.getItem("User_Details"));
     if (!user_details) {
         console.error("No user details found in localStorage");
@@ -51,7 +54,7 @@ function user_Login(username, password) {
     }
 
     const E_Upasswd = encrypt_password(password);
-
+//if exist check password
     for (const user of user_details) {
         if (user.UserName === username && user.Password === E_Upasswd) {
             return true;

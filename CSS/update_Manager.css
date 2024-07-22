@@ -1,0 +1,133 @@
+/* Basic reset for body and html */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Navigation Bar */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: fixed; /* Keep navbar fixed at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+li {
+    flex: 1;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a.active {
+    background-color: #111;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+/* Image Styling */
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: 100%;
+    position: relative;
+    top: 0; /* Align image to top */
+    left: 0; /* Align image to left */
+}
+
+/* Content Container */
+#content {
+    padding: 20px;
+    margin: 80px auto; /* Adjust margin-top to account for fixed navbar */
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Elements */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Input Fields */
+input[type="text"], input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 22px); /* Full width minus padding */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+/* Checkbox Alignment */
+.checkbox-container {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    margin-bottom: 20px;
+}
+
+input[type="checkbox"] {
+    margin-right: 300px; /* Space between checkbox and label */
+   
+}
+
+label[for="option"] {
+    margin: 0; /* Remove margin around label */
+    display: inline; /* Inline label to align next to the checkbox */
+}
+
+/* Submit Button */
+input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #111;
+}
+
+/* Password Section */
+#password label {
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+#password input[type="password"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 22px); /* Full width minus padding */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
