@@ -1,15 +1,16 @@
 const req_details = JSON.parse(localStorage.getItem("Request_Info")) || [];
+        
 document.addEventListener("DOMContentLoaded", () => {
-   
-    //console.log(req_details);
+    renderTable();
+});
 
+function renderTable() {
     let table = `
         <table>
             <tr> 
                 <th>Request ID</th>
                 <th>BikeID</th>
                 <th>UserID</th>
-                
                 <th>From</th>
                 <th>Time</th>
                 <th>To</th>
@@ -26,9 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${details.Time}</td>
                 <td>${details.Return}</td>
                 <td>
-                <div id="Action">
-                    <button class="action-btn" id="btnAccept" onclick="AcceptRequest(${details.RequestID})">Accept</button>
-                    <button class="action-btn" id="btnDecline" onclick="DeclineRequest(${details.RequestID})">Decline</button>
+                    <div class="action" data-id="${details.RequestID}">`
+                        if (details.Status == 0) {
+                            table += `
+                                <button class="action-btn" onclick="AcceptRequest(${details.RequestID})">Accept</button>
+                                <button class="action-btn" onclick="DeclineRequest(${details.RequestID})">Decline</button>`;
+                        } else if (details.Status == 1) {
+                            table += `Accepted`;
+                        } else if (details.Status == -1) {
+                            table += `Declined`;
+                        }
+                    table += `
                     </div>
                 </td>
             </tr>`;
@@ -36,39 +45,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     table += `</table>`;
     document.getElementById("request_details").innerHTML = table;
-
-
-});
-
-function AcceptRequest(reqID)
-{
-
-
-for(let i=0;i<req_details.length;++i)
-{
-if(req_details[i].RequestID===reqID)
-{
-req_details[i].Status=1;
-localStorage.setItem("Request_info",JSON.stringify(req_details));
-alert(`Status Accepted for ${reqID}`);
-document.getElementById("Action").textContent="Accepted";
-break;
-}
-}
 }
 
+function AcceptRequest(reqID) {
+    for (let i = 0; i < req_details.length; ++i) {
+        if (req_details[i].RequestID === reqID) {
+            req_details[i].Status = 1;
+            localStorage.setItem("Request_Info", JSON.stringify(req_details));
+            console.log(`Status updated for RequestID ${reqID}: ${req_details[i].Status}`);
+            alert(`Status Accepted for ${reqID}`);
+            updateActionButtons(reqID, "Accepted");
+            break;
+        }
+    }
+}
 
-function DeclineAccept(reqID)
-{
-for(let i=0;i<req_details.length;++i)
-{
-if(req_details[i].RequestID===reqID)
-{
-req_details[i].Status=-1;
-localStorage.setItem("Request_infor",JSON.stringify(req_details));
-alert(`Status Declined for ${reqID}`);
-document.getElementById("Action").textContent="Declined";
-break;
+//Status change when button click
+function DeclineRequest(reqID) {
+    for (let i = 0; i < req_details.length; ++i) {
+        if (req_details[i].RequestID === reqID) {
+            req_details[i].Status = -1;
+            localStorage.setItem("Request_Info", JSON.stringify(req_details));
+            console.log(`Status updated for RequestID ${reqID}: ${req_details[i].Status}`);
+            alert(`Status Declined for ${reqID}`);
+            updateActionButtons(reqID, "Declined");
+            break;
+        }
+    }
 }
+
+function updateActionButtons(reqID, status) {
+    const actionDiv = document.querySelector(`.action[data-id="${reqID}"]`);
+    actionDiv.innerHTML = status;
 }
-}
+

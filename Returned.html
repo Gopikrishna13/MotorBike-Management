@@ -49,30 +49,12 @@
                 <td>${details.User}</td>
                 <td>${details.From}</td>
                 <td>${details.Time}</td>
-                <td>${details.Return}</td>
-                <td>${display(details.From,details.Time,details.Return)}</td>
-                            </tr>`
-                    }
-                    table+=`</table>`;
-            function display(From,Time,Return)
-            {
-                const return_date_timeObj = new Date(Return);
-                const date_time = From + 'T' + Time;
-                const from_date_timeObj = new Date(date_time);
-             const today=new Date();
-
-     
-
-           if(today>return_date_timeObj){
-                return `Due by ${Math.abs(today-return_date_timeObj)/(36e5)} hours`;
-             }else{
-                return 'Pending';
-             }
-
+                <td>${details.Return}</td>`
+                
            
  
             }
-
+table+=`</table>`;
             document.getElementById("table").innerHTML = table;
         });
     </script>
