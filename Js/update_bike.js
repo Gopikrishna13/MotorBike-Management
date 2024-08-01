@@ -22,8 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <label for="bike_price_update">Rent</label>
                 <input type="number" id="bike_price_update" value="${bike_data.Rent}" required><br><br>
 
-                <label for="bike_qty_update">Quantity</label>
-                <input type="number" id="bike_qty_update" value="${bike_data.Quantity}" required><br><br>
+               
 
                 <label for="bike_img_update">Image</label><br>
                 <img src="${bike_data.Image}" width="50"><br><br>
@@ -44,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const bike_year = document.getElementById("bike_year_update").value;
             const bike_reg = document.getElementById("bike_reg_update").value;
             const bike_price = document.getElementById("bike_price_update").value;
-            const bike_qty = document.getElementById("bike_qty_update").value;
+           // const bike_qty = document.getElementById("bike_qty_update").value;
             let bike_img = document.getElementById("bike_img_update").files[0];
 
             const updateBikeDetails = (imageURL) => {
@@ -55,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     Year: bike_year,
                     Registration_Number: bike_reg,
                     Rent: bike_price,
-                    Quantity: bike_qty,
+                    //Quantity: bike_qty,
                     Image: imageURL || bike_data.Image // Use new image URL or keep the old one
                 };
 

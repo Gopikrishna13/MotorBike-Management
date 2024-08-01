@@ -20,7 +20,21 @@ if(display) {
 
        
 
-   
+        let req_details=JSON.parse(localStorage.getItem(("Request_Info")))|| [];
+     
+        for(let i=0;i<req_details.length;++i)
+        {
+            if(req_details[i].BikeID)
+            {
+                if(req_details[i].Status===1)
+                {
+                    alert("Accepted");
+                }else if(req_details[i].Status===-1)
+                {
+                    alert("Declined");
+                }
+            }
+        }
 
         
      
@@ -48,6 +62,8 @@ const reuquest_details={
  let request=JSON.parse(localStorage.getItem(("Request_Info")))|| [];
  request.push(reuquest_details);
 localStorage.setItem("Request_Info",JSON.stringify(request));
+
+
 }
 
 function returnDate()

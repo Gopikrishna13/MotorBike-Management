@@ -1,0 +1,61 @@
+
+#horizontal {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    text-align: center; 
+    margin-bottom: 20px; 
+}
+
+#horizontal li {
+    display: inline-block; 
+    margin-right: 10px; 
+}
+
+#horizontal li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#horizontal li a:hover {
+    background-color: #111;
+}
+
+
+.card-container {
+    width: 300px; 
+    margin: 0 auto; 
+    padding: 20px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center; 
+}
+
+
+#vertical {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+#vertical li {
+    margin-bottom: 10px; 
+}
+
+#vertical li a {
+    display: block;
+    color: #333;
+    padding: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+#vertical li a:hover {
+    background-color: #e0e0e0;
+}

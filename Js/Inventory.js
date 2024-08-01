@@ -81,7 +81,7 @@ function createBike() {
     const bike_year = document.getElementById("bike_year").value;
     const bike_reg = document.getElementById("bike_reg").value;
     const bike_price = document.getElementById("bike_price").value;
-    const bike_qty = document.getElementById("bike_qty").value;
+   // const bike_qty = document.getElementById("bike_qty").value;
     const bike_img = document.getElementById("bike_img").files[0];
    
     const reader = new FileReader();
@@ -93,7 +93,7 @@ function createBike() {
             Year: bike_year,
             Registration_Number: bike_reg,
             Rent: bike_price,
-            Quantity: bike_qty,
+           // Quantity: bike_qty,
             Image: event.target.result
         };
        
@@ -133,13 +133,14 @@ function displayBikes() {
                 <td>${data.Registration_Number}</td>
                 <td>${data.Rent}</td>
                 <td>
-                    <button onclick="updateData(${data.ID})">Update</button>
-                    <button onclick="deleteData(${data.ID})">Delete</button>
+                    <button onclick="updateData(${data.ID})" id="upd_btn">Update</button>
+                    <button onclick="deleteData(${data.ID} )" id="dlt_btn">Delete</button>
                 </td>
             </tr>`;
     }
 
     table += `</table>`;
+    
     document.getElementById("Bike_table").innerHTML = table;
 }
 

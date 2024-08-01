@@ -61,10 +61,17 @@ th {
 tr:hover {
     background-color: #ddd;
 }
-#delete_btn{
+#dlt_btn{
     background-color: red;
 }
 
-#update_btn{
+#upd_btn{
     background-color: orange;
+}
+
+#add_btn{
+    background-color: blue;
+}
+#search_btn{
+    background-color: green;
 }

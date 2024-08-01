@@ -10,13 +10,24 @@ document.getElementById("Rent").value=document.getElementById("range").value;
  document.addEventListener("input",()=>{
     document.getElementById("Rent").value=document.getElementById("range").value;
  })
-    displayBikes(JSON.parse(localStorage.getItem("Bike_Details")) || []);
+    displayBikes(JSON.parse(localStorage.getItem("Bike_Details")) || [],JSON.parse(localStorage.getItem("Request_Info"))|| []);
 });
 
-function displayBikes(bikes) {
+function displayBikes(bikes,request) {
     let content = '';
 
-    for (let i = 0; i < bikes.length; i++) {
+    const filterbikes = new Set(
+        request.filter(req=>req.Status===1).map(req=>req.BikeID)
+    );
+
+
+
+    const availablebike=bikes.filter(bike=>!filterbikes.has(bike.ID));
+
+
+
+    for (let i = 0; i < availablebike.length; i++) {
+      
         content += `
             <div class="bike_card">
                 <img src="${bikes[i].Image}" ><br>
