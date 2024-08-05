@@ -10,19 +10,19 @@ document.getElementById("Rent").value=document.getElementById("range").value;
  document.addEventListener("input",()=>{
     document.getElementById("Rent").value=document.getElementById("range").value;
  })
-    displayBikes(JSON.parse(localStorage.getItem("Bike_Details")) || [],JSON.parse(localStorage.getItem("Request_Info"))|| []);
+    displayBikes(JSON.parse(localStorage.getItem("Bike_Details")) );
 });
 
-function displayBikes(bikes,request) {
+function displayBikes(bikes) {
     let content = '';
 
-    const filterbikes = new Set(
-        request.filter(req=>req.Status===1).map(req=>req.BikeID)
-    );
+    // const filterbikes = new Set(
+    //     request.filter(req=>req.Status===1).map(req=>req.BikeID)
+    // );
 
 
 
-    const availablebike=bikes.filter(bike=>!filterbikes.has(bike.ID));
+    const availablebike=bikes.filter(bike=>bike.Status!=1);
 
 
 

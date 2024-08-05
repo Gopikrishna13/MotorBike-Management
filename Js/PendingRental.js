@@ -1,11 +1,27 @@
-const requset_details = JSON.parse(localStorage.getItem("Request_Info")) || [];
-const req_details=requset_details.filter(req=>req.Status===1)
+// Parse data from localStorage
+const request_details = JSON.parse(localStorage.getItem("Request_Info")) || [];
+const bike_details = JSON.parse(localStorage.getItem("Bike_Details")) || [];
+
+// Debugging: Log parsed data
+console.log("Request Details:", request_details);
+console.log("Bike Details:", bike_details);
+
+// Filter bike details with status 1
+const available_bikes = bike_details.filter(bike => bike.Status === 1);
+
+// Find request details with matching BikeID where bike status is 1
+const matched_requests = request_details.filter(req => 
+    available_bikes.some(bike => bike.ID === req.BikeID)
+);
+
+console.log("Matched Requests:", matched_requests);
+
 document.addEventListener("DOMContentLoaded", () => {
-   displaydetails(req_details);
+    displaydetails(matched_requests);
 });
 
-function displaydetails(req_details)
-{
+// Function to display bike details in a table
+function displaydetails(req_details) {
     let table = `
     <table>
         <tr>
@@ -18,8 +34,8 @@ function displaydetails(req_details)
             <th>Action</th>
         </tr>`;
    
-for(const details of req_details) {
-    table += `
+    for (const details of req_details) {
+        table += `
         <tr>
             <td>${details.BikeID}</td>
             <td>${details.User}</td>
@@ -27,13 +43,15 @@ for(const details of req_details) {
             <td>${details.Time}</td>
             <td>${details.Return}</td>
             <td>${display(details.From, details.Time, details.Return)}</td>
-            <td> <button onclick="returnedbike(${details.BikeID})"id="return">Return</button></td>
+            <td><button onclick="returnedbike(${details.BikeID})" id="return">Return</button></td>
         </tr>`;
+    }
+
+    table += `</table>`;
+    document.getElementById("table").innerHTML = table;
 }
 
-table += `</table>`;
-document.getElementById("table").innerHTML = table;
-}
+// Function to display due date information
 function display(from, time, returnDate) {
     const returnDateTimeObj = new Date(returnDate);
     const fromDateTimeStr = from + 'T' + time;
@@ -52,25 +70,24 @@ function display(from, time, returnDate) {
     }
 }
 
-document.getElementById("search_btn").addEventListener('click',()=>{
-const finddetails=Number(document.getElementById("search_value").value) ;
-const disp_request=req_details.filter(req=>req.BikeID===finddetails);
-displaydetails(disp_request);
+// Search button event listener
+document.getElementById("search_btn").addEventListener('click', () => {
+    const finddetails = Number(document.getElementById("search_value").value);
+    const disp_request = matched_requests.filter(req => req.BikeID === finddetails);
+    displaydetails(disp_request);
+});
 
-})
-
-function returnedbike(id)
-{
-    sessionStorage.setItem("Returned BikeID",id);
-    sessionStorage.setItem("Returned Time",Date.now().toString())
-    for(let i=0;i<req_details.length;++i)
-    {
-        if(requset_details[i].BikeID===id)
-        {
-            req_details[i].Status=0;
-            localStorage.setItem("Request_Info",JSON.stringify(req_details));
+// Function to handle bike return
+function returnedbike(id) {
+    sessionStorage.setItem("Returned BikeID", id);
+    sessionStorage.setItem("Returned Time", Date.now().toString());
+   
+    for (let i = 0; i < bike_details.length; ++i) {
+        if (bike_details[i].ID === id) {
+            bike_details[i].Status = 0;
+            localStorage.setItem("Bike_Details", JSON.stringify(bike_details));
+            break;
         }
-     
     }
-    window.location.href="Returned.html";
+    window.location.href = "Returned.html";
 }

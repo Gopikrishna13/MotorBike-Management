@@ -1,10 +1,30 @@
+// Function to store bike details and return time in localStorage
+function storeDetails(bike_details, returnedTime) {
+    const detailsToStore = bike_details.map(details => ({
+        BikeID: details.BikeID,
+        User: details.User,
+        From: details.From,
+        Return: details.Return,
+        ReturnTime: returnedTime.toISOString(), // Store as ISO string
+        DueTime: `${Math.floor((returnedTime - new Date(details.Return)) / (1000 * 60 * 60))} hours`
+    }));
+
+    localStorage.setItem('Stored_Bike_Details', JSON.stringify(detailsToStore));
+}
+
+// Get details and return time from sessionStorage
 let returnedId = sessionStorage.getItem("Returned BikeID");
 let returnedTime = new Date(Number(sessionStorage.getItem("Returned Time")));
 const req_details = JSON.parse(localStorage.getItem("Request_Info")) || [];
 const bike_details = req_details.filter(bike => bike.BikeID === Number(returnedId));
 
+// Store the details
+storeDetails(bike_details, returnedTime);
+
+// Display the details
 displaydetails(bike_details);
 
+// Function to display bike details in a table
 function displaydetails(bike_details) {
     let table = `
     <table>
@@ -46,3 +66,11 @@ function displaydetails(bike_details) {
     table += `</table>`;
     document.getElementById("table").innerHTML = table;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Fetch stored details from localStorage
+    const storedDetails = JSON.parse(localStorage.getItem('Stored_Bike_Details')) || [];
+    
+    // Display the stored details
+    displaydetails(storedDetails);
+});

@@ -93,6 +93,7 @@ function createBike() {
             Year: bike_year,
             Registration_Number: bike_reg,
             Rent: bike_price,
+            Status:0,
            // Quantity: bike_qty,
             Image: event.target.result
         };
