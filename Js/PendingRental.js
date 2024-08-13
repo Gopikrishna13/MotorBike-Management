@@ -6,7 +6,7 @@ const bike_details = JSON.parse(localStorage.getItem("Bike_Details")) || [];
 console.log("Request Details:", request_details);
 console.log("Bike Details:", bike_details);
 
-// Filter bike details with status 1
+// Filter bike details with status 1 (booked)
 const available_bikes = bike_details.filter(bike => bike.Status === 1);
 
 // Find request details with matching BikeID where bike status is 1
@@ -43,7 +43,7 @@ function displaydetails(req_details) {
             <td>${details.Time}</td>
             <td>${details.Return}</td>
             <td>${display(details.From, details.Time, details.Return)}</td>
-            <td><button onclick="returnedbike(${details.BikeID})" id="return">Return</button></td>
+            <td><button onclick="returnedbike(${details.BikeID}, ${details.RequestID}, '${details.From}', '${details.Return}', '${details.User}')" id="return">Return</button></td>
         </tr>`;
     }
 
@@ -78,10 +78,8 @@ document.getElementById("search_btn").addEventListener('click', () => {
 });
 
 // Function to handle bike return
-function returnedbike(id) {
-    sessionStorage.setItem("Returned BikeID", id);
-    sessionStorage.setItem("Returned Time", Date.now().toString());
-   
+function returnedbike(id, reqID, from, to, user) {
+    // Update the status of the bike
     for (let i = 0; i < bike_details.length; ++i) {
         if (bike_details[i].ID === id) {
             bike_details[i].Status = 0;
@@ -89,5 +87,22 @@ function returnedbike(id) {
             break;
         }
     }
-    window.location.href = "Returned.html";
+
+    // Remove the related request from Request_Info
+    const updateRequest = request_details.filter(req => req.RequestID !== reqID);
+    localStorage.setItem("Request_Info", JSON.stringify(updateRequest));
+
+    // Store return details in localStorage
+    const returnedDetails = {
+        BikeID: id,
+        User: user,
+        From: from,
+        To: to,
+        ReturnedTime: new Date().toISOString() // Store as ISO string
+    };
+
+    let storedBikeDetails = JSON.parse(localStorage.getItem("Stored_Bike_Details")) || [];
+    storedBikeDetails.push(returnedDetails);
+    localStorage.setItem("Stored_Bike_Details", JSON.stringify(storedBikeDetails));
+    window.location.href="Returned.html";
 }
