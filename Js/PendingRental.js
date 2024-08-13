@@ -42,7 +42,7 @@ function displaydetails(req_details) {
             <td>${details.From}</td>
             <td>${details.Time}</td>
             <td>${details.Return}</td>
-            <td>${display(details.From, details.Time, details.Return)}</td>
+            <td>${displayDueDate(details.From, details.Time, details.Return)}</td>
             <td><button onclick="returnedbike(${details.BikeID}, ${details.RequestID}, '${details.From}', '${details.Return}', '${details.User}')" id="return">Return</button></td>
         </tr>`;
     }
@@ -52,7 +52,7 @@ function displaydetails(req_details) {
 }
 
 // Function to display due date information
-function display(from, time, returnDate) {
+function displayDueDate(from, time, returnDate) {
     const returnDateTimeObj = new Date(returnDate);
     const fromDateTimeStr = from + 'T' + time;
     const fromDateTimeObj = new Date(fromDateTimeStr);
@@ -77,20 +77,26 @@ document.getElementById("search_btn").addEventListener('click', () => {
     displaydetails(disp_request);
 });
 
+
 // Function to handle bike return
 function returnedbike(id, reqID, from, to, user) {
-    // Update the status of the bike
-    for (let i = 0; i < bike_details.length; ++i) {
-        if (bike_details[i].ID === id) {
-            bike_details[i].Status = 0;
-            localStorage.setItem("Bike_Details", JSON.stringify(bike_details));
-            break;
-        }
-    }
-
     // Remove the related request from Request_Info
     const updateRequest = request_details.filter(req => req.RequestID !== reqID);
     localStorage.setItem("Request_Info", JSON.stringify(updateRequest));
+
+    // Check if there are any other requests for the bike
+    const hasPendingRequests = updateRequest.some(req => req.BikeID === id && req.Status === 1);
+
+    // Update the status of the bike only if there are no pending requests
+    if (!hasPendingRequests) {
+        for (let i = 0; i < bike_details.length; ++i) {
+            if (bike_details[i].ID === id) {
+                bike_details[i].Status = 0; // Set status to 0 for available
+                localStorage.setItem("Bike_Details", JSON.stringify(bike_details));
+                break;
+            }
+        }
+    }
 
     // Store return details in localStorage
     const returnedDetails = {
@@ -104,5 +110,7 @@ function returnedbike(id, reqID, from, to, user) {
     let storedBikeDetails = JSON.parse(localStorage.getItem("Stored_Bike_Details")) || [];
     storedBikeDetails.push(returnedDetails);
     localStorage.setItem("Stored_Bike_Details", JSON.stringify(storedBikeDetails));
-    window.location.href="Returned.html";
+
+    // Redirect to the Returned page
+    window.location.href = "Returned.html";
 }
