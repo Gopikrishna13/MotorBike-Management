@@ -21,9 +21,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function Request(id, uName) {
-    const return_info = returnDate();
+    const return_info = returnDate(); // Assuming this function returns the return date
     const request_details = JSON.parse(localStorage.getItem("Request_Info")) || [];
-    const requestedDate = new Date(document.getElementById("date").value + 'T' + document.getElementById("time").value);
+    const dateInput = document.getElementById("date").value;
+    const timeInput = document.getElementById("time").value;
+    const requestedDate = new Date(dateInput + 'T' + timeInput);
+    
+    // Get today's date for comparison
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Validate if requestedDate is in the past
+    if (requestedDate < today) {
+        alert("The selected date cannot be in the past.");
+        return;
+    }
 
     console.log("Requested Date:", requestedDate);
 
@@ -35,10 +47,13 @@ function Request(id, uName) {
         const bookedDate = new Date(req.Return);
         const twoDaysBeforeBookedDate = new Date(bookedDate);
         twoDaysBeforeBookedDate.setDate(bookedDate.getDate() - 2);
+        twoDaysBeforeBookedDate.setHours(0, 0, 0, 0); // Set to start of the day for accurate comparison
 
         console.log("Booked Date:", bookedDate);
         console.log("Two Days Before Booked Date:", twoDaysBeforeBookedDate);
+        console.log("Today:", today);
 
+        // Check if requestedDate is before the two days before booked date and not before today
         const valid = requestedDate < twoDaysBeforeBookedDate ;
         console.log("Is Requested Date Valid:", valid);
         return valid;
@@ -49,8 +64,8 @@ function Request(id, uName) {
             RequestID: Math.floor(Math.random() * (1000000 - 1)) + 1,
             BikeID: id,
             User: uName,
-            From: document.getElementById("date").value,
-            Time: document.getElementById("time").value,
+            From: dateInput,
+            Time: timeInput,
             Return: return_info,
             Status: 0
         };
@@ -58,15 +73,18 @@ function Request(id, uName) {
         request_details.push(newRequest);
         localStorage.setItem("Request_Info", JSON.stringify(request_details));
     } else {
-        alert("Cannot book. The requested date is too close to an already booked date.");
+        alert("Cannot book. The requested date is too close to an already booked date or is in the past.");
     }
 }
+
+
 function returnDate() {
     const date = document.getElementById("date").value;
     const time = document.getElementById("time").value;
     const date_time = date + 'T' + time;
     const date_timeObj = new Date(date_time);
 
+    // Add 24 hours to the requested date for return date
     date_timeObj.setHours(date_timeObj.getHours() + 24);
 
     const return_details = date_timeObj.toUTCString();
