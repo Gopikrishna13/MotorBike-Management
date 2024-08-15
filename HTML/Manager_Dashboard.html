@@ -6,6 +6,7 @@
     <title>Document</title>
 
     <link rel="stylesheet"  href="../CSS/Admin.css">
+    <link rel="stylesheet" href="../CSS/Manager_Dashboard.css">
 </head>
 <body>
     <ul>
@@ -15,7 +16,40 @@
         <li><a href="User_details.html">User Details</a></li>
         <li><a href="update_Manager.html">Settings</a></li>
     </ul>
+
+
+
+    <div class="dashboard">
+        <!-- Card Section -->
+        <div class="cards">
+            <div class="card">
+                <h3>Total Users</h3>
+                <p id="totalUsers">0</p>
+            </div>
+            <div class="card">
+                <h3>Total Bikes</h3>
+                <p id="totalBikes">0</p>
+            </div>
+            <div class="card">
+                <h3> Booked Bikes</h3>
+                <p id="BookedBikes">0</p>
+            </div>
+            <div class="card">
+                <h3>Bikes in Hand</h3>
+                <p id="BikesInHand">0</p>
+            </div>
+        </div>
+        
+        <!-- Placeholder for Graphs -->
+        <div class="graphs">
+            <canvas id="pieChart"></canvas>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../Js/dashboard.js"></script>
 </body>
-<img src="admin.png">
-<script src="update_Profile.js"></script>
+<!-- <img src="admin.png"> -->
+<!-- <script src="update_Profile.js"></script> -->
 </html>

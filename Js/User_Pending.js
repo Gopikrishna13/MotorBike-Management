@@ -36,30 +36,41 @@ function displaydetails(req_details) {
     <table>
         <tr>
             <th>BikeID</th>
-        
             <th>From</th>
             <th>Time</th>
             <th>Return</th>
             <th>Due By</th>
-          
         </tr>`;
-   
+
     for (const details of req_details) {
+        const today = new Date();
+        const FromDate = new Date(details.From);
+        const ReturnDate=new Date(details.Return);
+        let rowColor = "";
+
+        // Compare only the date parts (ignore time)
+        if (today.toDateString() === FromDate.toDateString()) {
+            rowColor = "style='background-color: yellow;'";
+        } else if ((today - FromDate) / (1000 * 60 * 60 * 24) > 1) {
+            // If more than 1 day (24 hours) has passed since the 'From' date
+            rowColor = "style='background-color: red;'";
+        }
+console.log(rowColor);
+
         table += `
-        <tr>
+        <tr ${rowColor}>
             <td>${details.BikeID}</td>
-          
             <td>${details.From}</td>
             <td>${details.Time}</td>
             <td>${details.Return}</td>
             <td>${display(details.From, details.Time, details.Return)}</td>
-           
         </tr>`;
     }
 
     table += `</table>`;
     document.getElementById("table").innerHTML = table;
 }
+
 
 // Function to display due date information
 function display(from, time, returnDate) {
