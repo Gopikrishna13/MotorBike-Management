@@ -5,61 +5,109 @@ body {
     padding: 0;
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+    justify-content: center; /* Center the nav items */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+li {
+    position: relative; /* Necessary for dropdown positioning */
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px; /* Adjust padding for better spacing */
+    text-decoration: none;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    font-weight: bold; /* Slightly bolder text */
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: #555;
+}
+
+li.dropdown {
+    display: inline-block;
+    overflow: visible; /* Ensure dropdown is not clipped */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #444; /* Darker background for dropdown */
+    min-width: 180px; /* Adjusted width for better look */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow for dropdown */
+    z-index: 1;
+    border-radius: 4px; /* Rounded corners for dropdown */
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+    border-bottom: 1px solid #333; /* Add border between items */
+}
+
+.dropdown-content a:last-child {
+    border-bottom: none; /* Remove border from the last item */
+}
+
+.dropdown-content a:hover {
+    background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    top: 100%; /* Ensure dropdown appears below the button */
+    left: 0;
+}
+
+/* Additional Styles */
 .dashboard {
     padding: 20px;
 }
 
 .cards {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 20px;
 }
 
 .card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f4f4f4;
     padding: 20px;
-    flex: 1;
-    margin-right: 20px;
+    border-radius: 5px;
     text-align: center;
-}
-
-.card:last-child {
-    margin-right: 0;
-}
-
-.card h3 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
-}
-
-.card p {
-    font-size: 2em;
-    margin: 10px 0 0;
-    color: #007bff;
+    width: 200px;
 }
 
 .graphs {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
-canvas {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    width: 45%;
-}
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    ul {
+        flex-direction: column;
+    }
 
-/* Set the size of the pie chart directly */
-#pieChart {
-    width: 200px; /* Adjust width */
-    height: 200px; /* Adjust height */
-}
-#barChart{
-    width: 200px; /* Adjust width */
-    height: 200px;
+    li {
+        width: 100%;
+    }
+
+    .dropdown-content {
+        position: static; /* Adjust for better mobile behavior */
+    }
 }

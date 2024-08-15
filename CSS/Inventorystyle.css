@@ -61,17 +61,65 @@ th {
 tr:hover {
     background-color: #ddd;
 }
-#dlt_btn{
+
+#dlt_btn {
     background-color: red;
 }
 
-#upd_btn{
+#upd_btn {
     background-color: orange;
 }
 
-#add_btn{
+#add_btn {
     background-color: blue;
 }
-#search_btn{
+
+#search_btn {
     background-color: green;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    body {
+        margin: 10px;
+    }
+
+    form {
+        width: 100%;
+        padding: 15px;
+    }
+
+    input[type="text"], input[type="number"], input[type="file"] {
+        padding: 6px;
+    }
+
+    button, input[type="submit"] {
+        padding: 8px 10px;
+    }
+
+    table, th, td {
+        padding: 8px;
+    }
+
+    th, td {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    th, td {
+        font-size: 12px;
+    }
+
+    button, input[type="submit"] {
+        padding: 6px 8px;
+    }
+
+    input[type="text"], input[type="number"], input[type="file"] {
+        padding: 4px;
+    }
+
+    form {
+        padding: 10px;
+    }
 }

@@ -22,8 +22,8 @@ function validate(e) {
         let Manager_mobile = document.getElementById("M_Mobile").value.trim();
         let Manager_email=document.getElementById("M_Email").value.trim();
 
-        if (checkManager(Manager_username)) {
-            alert("Username already exists! Please choose another username.");
+        if (checkManager(Manager_username, Manager_nic)) {
+            alert("Username or NIC already exists! Please choose another.");
             location.reload();
             return;
         }
@@ -47,8 +47,8 @@ function validate(e) {
         let User_mobile = document.getElementById("U_Mobile").value.trim();
         let User_email=document.getElementById("U_Email").value.trim();
 
-        if (checkUser(User_Name)) {
-            alert("Username already exists! Please choose another username.");
+        if (checkUser(User_Name, NIC)) {
+            alert("Username or NIC already exists! Please choose another.");
             location.reload();
             return;
         }
@@ -67,29 +67,29 @@ function validate(e) {
     }
 }
 
-//check Manager user name already exists
-function checkManager(Manager_username) {
+// Check if Manager username or NIC already exists
+function checkManager(Manager_username, Manager_nic) {
     const Manager_details = JSON.parse(localStorage.getItem("Manager_Details")) || [];
     for (const manager of Manager_details) {
-        if (manager.UserName === Manager_username) {
-            return true; // Username already exists
+        if (manager.UserName === Manager_username || manager.NIC === Manager_nic) {
+            return true; // Username or NIC already exists
         }
     }
-    return false; // Username does not exist
+    return false; // Username and NIC are unique
 }
 
-//check User Name already Exist
-function checkUser(User_Name) {
+// Check if User username or NIC already exists
+function checkUser(User_Name, NIC) {
     const User_details = JSON.parse(localStorage.getItem("User_Details")) || [];
     for (const user of User_details) {
-        if (user.UserName === User_Name) {
-            return true; // Username already exists
+        if (user.UserName === User_Name || user.NIC === NIC) {
+            return true; // Username or NIC already exists
         }
     }
-    return false; // Username does not exist
+    return false; // Username and NIC are unique
 }
 
-//store Manager Details
+// Store Manager Details
 function Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mobile,Manager_Email) {
     const M_password = encrypt_password(Manager_passwd);//Encrypt password return
     const Manager = {
@@ -105,7 +105,8 @@ function Store_Manager(Manager_username, Manager_passwd, Manager_nic, Manager_mo
     Manager_details.push(Manager);
     localStorage.setItem("Manager_Details", JSON.stringify(Manager_details));
 }
-//Store user details
+
+// Store User Details
 function Store_User(User_Name, User_Pwd, NIC, License, User_mobile,User_email) {
     const U_password = encrypt_password(User_Pwd);
     const User = {
@@ -123,7 +124,7 @@ function Store_User(User_Name, User_Pwd, NIC, License, User_mobile,User_email) {
     localStorage.setItem("User_Details", JSON.stringify(User_details));
 }
 
-//Encrypt Password
+// Encrypt Password
 function encrypt_password(password) {
     return window.btoa(password);
 }

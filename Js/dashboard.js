@@ -4,6 +4,7 @@ const totalbikes = JSON.parse(localStorage.getItem("Bike_Details")).length;
 const request_details = JSON.parse(localStorage.getItem("Request_Info")) || [];
 const bookedRequest = request_details.filter(req => req.Status == 1);
 const availablebikes = JSON.parse(localStorage.getItem("Bike_Details")) || [];
+
 const returned_bikes = JSON.parse(localStorage.getItem("Stored_Bike_Details")) || [];
 const bikes_in = availablebikes.filter(bike => bike.Status == 0);
 const distinctBike = [...new Set(bookedRequest.map(req => req.BikeID))];
@@ -126,6 +127,81 @@ const barChart = new Chart(ctx_bar, {
             },
             y: {
                 beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        // Format the numbers to avoid scientific notation
+                        return value.toLocaleString(); // Adds commas as thousands separators
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Prepare data for the stacked bar chart
+const brandMonthlyIncome = {};
+
+// Initialize brandMonthlyIncome for each brand and each month
+Object.keys(incomeByBrand).forEach(brand => {
+    brandMonthlyIncome[brand] = Array(12).fill(0);
+});
+
+returned_bikes.forEach(returned => {
+    const bike = availablebikes.find(bike => bike.ID === returned.BikeID);
+    if (bike) {
+        const rent = parseFloat(bike.Rent); // Convert Rent to number
+        const returnDate = new Date(returned.ReturnedTime);
+        const month = returnDate.getMonth(); // Get the month (0 = January, 11 = December)
+        brandMonthlyIncome[bike.Brand][month] += rent; // Add the bike rent to the corresponding month and brand
+    }
+});
+
+// Prepare datasets for the stacked bar chart
+const stackedDatasets = Object.keys(brandMonthlyIncome).map(brand => {
+    return {
+        label: brand,
+        data: brandMonthlyIncome[brand],
+        backgroundColor: getRandomColor(), // Function to generate random colors for each brand
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        borderWidth: 1
+    };
+});
+
+// Function to generate a random color
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+    return `rgba(${r}, ${g}, ${b}, 0.6)`;
+}
+
+// Create the stacked bar chart
+const ctx_stacked = document.createElement('canvas');
+document.querySelector('.graphs').insertBefore(ctx_stacked, ctx_bar.canvas);
+
+ctx_stacked.width = 300;  // Match the width of the pie chart
+ctx_stacked.height = 300; // Match the height of the pie chart
+
+const stackedBarChart = new Chart(ctx_stacked.getContext('2d'), {
+    type: 'bar',
+    data: {
+        labels: months,
+        datasets: stackedDatasets
+    },
+    options: {
+        responsive: false, // Disable responsiveness
+        maintainAspectRatio: false, // Maintain aspect ratio
+        scales: {
+            x: {
+                beginAtZero: true,
+                stacked: true, // Enable stacking
+                ticks: {
+                    autoSkip: false // Ensure all labels are displayed
+                }
+            },
+            y: {
+                beginAtZero: true,
+                stacked: true, // Enable stacking
                 ticks: {
                     callback: function(value) {
                         // Format the numbers to avoid scientific notation

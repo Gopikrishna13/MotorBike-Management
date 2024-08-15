@@ -1,3 +1,4 @@
+/* Basic Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -8,6 +9,7 @@ body {
     align-items: center;
     height: 100vh;
 }
+
 #update_bike {
     background-color: #fff;
     padding: 20px;
@@ -16,14 +18,17 @@ body {
     max-width: 400px;
     width: 100%;
 }
+
 form {
     display: flex;
     flex-direction: column;
 }
+
 label {
     margin-bottom: 5px;
     font-weight: bold;
 }
+
 input[type="text"],
 input[type="number"],
 input[type="file"] {
@@ -32,22 +37,69 @@ input[type="file"] {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 input[type="submit"],
 input[type="button"] {
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #28a745;
     color: #fff;
     cursor: pointer;
     margin-top: 10px;
 }
+
+input[type="submit"] {
+    background-color: #28a745;
+}
+
 input[type="button"] {
     background-color: #dc3545;
 }
+
 img {
     margin-bottom: 15px;
     max-width: 100%;
     height: auto;
     border-radius: 4px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    #update_bike {
+        padding: 15px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"] {
+        padding: 8px;
+        margin-bottom: 12px;
+    }
+
+    input[type="submit"],
+    input[type="button"] {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #update_bike {
+        padding: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"] {
+        padding: 6px;
+        margin-bottom: 10px;
+    }
+
+    input[type="submit"],
+    input[type="button"] {
+        padding: 6px;
+    }
+
+    img {
+        margin-bottom: 10px;
+    }
 }

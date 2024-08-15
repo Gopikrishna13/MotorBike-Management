@@ -1,24 +1,76 @@
+/* General Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
+
 th, td {
     border: 1px solid black;
     padding: 8px;
     text-align: left;
 }
+
 th {
     background-color: #f2f2f2;
 }
+
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-#search_btn{
+
+/* Button Styles */
+#search_btn {
     background-color: rgb(0, 110, 255);
-    color:white;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
-#return{
+
+#search_btn:hover {
+    background-color: rgb(0, 90, 220);
+}
+
+#return {
     background-color: green;
     color: wheat;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#return:hover {
+    background-color: darkgreen;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+
+    th, td {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+  
+    #search_btn, #return {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+ 
+    th, td {
+        padding: 4px;
+        font-size: 12px;
+    }
+
+   
+    #search_btn, #return {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
 }

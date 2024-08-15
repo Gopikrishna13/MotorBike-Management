@@ -94,8 +94,7 @@ input[type="text"], input[type="password"] {
 }
 
 input[type="checkbox"] {
-    margin-right: 300px; /* Space between checkbox and label */
-   
+    margin-right: 10px; /* Adjust space between checkbox and label */
 }
 
 label[for="option"] {
@@ -130,4 +129,67 @@ input[type="submit"]:hover {
     border-radius: 4px;
     width: calc(100% - 22px); /* Full width minus padding */
     box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    /* Adjust for tablets and small screens */
+    ul {
+        flex-direction: column; /* Stack nav items vertically */
+        align-items: center; /* Center-align items */
+    }
+
+    li {
+        width: 100%; /* Full width for nav items */
+    }
+
+    li a {
+        padding: 12px; /* Adjust padding for smaller screens */
+    }
+
+    #content {
+        margin: 60px auto; /* Adjust margin-top for smaller screens */
+        padding: 15px; /* Reduce padding for smaller screens */
+    }
+
+    input[type="search"], input[type="text"], input[type="password"] {
+        font-size: 14px; /* Adjust font size for input fields */
+        padding: 8px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Adjust for mobile devices */
+    ul {
+        flex-direction: column; /* Stack nav items vertically */
+        align-items: center; /* Center-align items */
+    }
+
+    li {
+        width: 100%; /* Full width for nav items */
+    }
+
+    li a {
+        padding: 10px; /* Adjust padding for very small screens */
+    }
+
+    #content {
+        margin: 40px auto; /* Adjust margin-top for very small screens */
+        padding: 10px; /* Reduce padding for very small screens */
+    }
+
+    input[type="search"], input[type="text"], input[type="password"] {
+        font-size: 12px; /* Adjust font size for input fields */
+        padding: 6px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
 }
