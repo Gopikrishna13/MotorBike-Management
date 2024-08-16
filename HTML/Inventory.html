@@ -19,11 +19,9 @@
     <br>
     <div id="update_bike"></div>
 
-    <form id="bike_form">
-        <div id="bike_container"></div>
-
-        <label for="bike_type">Type</label>
-        <input type="text" id="bike_type" required>
+    <form id="bike_form" style="display: none;">
+        <label for="bike_model">Model</label>
+        <input type="text" id="bike_model" required>
         <br><br>
 
         <label for="bike_brand">Brand</label>
@@ -34,10 +32,6 @@
         <input type="text" id="bike_year" required>
         <br><br>
 
-        <label for="bike_reg">Registration Number</label>
-        <input type="text" id="bike_reg" required>
-        <br><br>
-
         <label for="bike_price">Rent</label>
         <input type="number" id="bike_price" required>
         <br><br>
@@ -46,9 +40,11 @@
         <input type="number" id="bike_quantity" required>
         <br><br>
 
-        <label for="bike_img">Image</label>
-        <input type="file" id="bike_img" required>
+        <label for="image_input">Image</label>
+        <input type="file" id="image_input" accept="image/*" required>
         <br><br>
+
+        <div id="reg_numbers_container"></div>
 
         <input type="submit" id="bike_detail" value="Submit">
         <input type="button" id="bike_detail_cancel" value="Cancel">

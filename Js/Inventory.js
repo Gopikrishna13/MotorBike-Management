@@ -3,16 +3,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById('add_btn').addEventListener('click', function() {
         var form = document.getElementById('bike_form');
-        if (form.style.display === 'none') {
-            form.style.display = 'block';
-        } else {
-            form.style.display = 'none';
-        }
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
     });
 
-    document.getElementById("search_btn").addEventListener("click", function() {
-        searchBike(); 
-    });
+    document.getElementById("bike_quantity").addEventListener("input", generateRegNumberFields);
+
+    document.getElementById("search_btn").addEventListener("click", searchBike);
 
     document.getElementById("bike_form").addEventListener("submit", function(e) {
         e.preventDefault();
@@ -22,7 +18,30 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("bike_detail_cancel").addEventListener("click", function() {
         document.getElementById("bike_form").style.display = "none";
     });
+
+    document.getElementById("image_input").addEventListener("change", handleImageUpload);
 });
+
+function generateRegNumberFields() {
+    const quantity = Number(document.getElementById("bike_quantity").value);
+    const container = document.getElementById("reg_numbers_container");
+    container.innerHTML = "";
+
+    for (let i = 0; i < quantity; i++) {
+        const label = document.createElement("label");
+        label.textContent = `Registration Number ${i + 1}`;
+        container.appendChild(label);
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.required = true;
+        input.className = "bike_reg";
+        container.appendChild(input);
+
+        container.appendChild(document.createElement("br"));
+        container.appendChild(document.createElement("br"));
+    }
+}
 
 function searchBike() {
     const type = document.getElementById("type_search").value.toLowerCase();
@@ -64,8 +83,8 @@ function searchBike() {
                 <td>${data.Rent}</td>
                 <td>${data.Quantity}</td>
                 <td>
-                    <button onclick="updateData(${data.ID})">Update</button>
-                    <button onclick="deleteData(${data.ID})">Delete</button>
+                    <button id="upd_btn" onclick="updateData(${data.ID})">Update</button>
+                    <button id="dlt_btn" onclick="deleteData(${data.ID})">Delete</button>
                 </td>
             </tr>`;
     }
@@ -75,68 +94,77 @@ function searchBike() {
 }
 
 function createBike() {
-    const bike_type_elem = document.getElementById("bike_type");
-    const bike_brand_elem = document.getElementById("bike_brand");
-    const bike_year_elem = document.getElementById("bike_year");
-    const bike_reg_elem = document.getElementById("bike_reg");
-    const bike_price_elem = document.getElementById("bike_price");
-    const bike_quantity_elem = document.getElementById("bike_quantity");
-    const bike_img_elem = document.getElementById("bike_img");
-
-    if (!bike_type_elem || !bike_brand_elem || !bike_year_elem || !bike_reg_elem || !bike_price_elem || !bike_quantity_elem || !bike_img_elem) {
-        console.error("One or more form elements are missing.");
-        return;
-    }
-
-    const bike_type = bike_type_elem.value;
-    const bike_brand = bike_brand_elem.value;
-    const bike_year = bike_year_elem.value;
-    const bike_reg = bike_reg_elem.value;
-    const bike_price = bike_price_elem.value;
-    const bike_quantity = Number(bike_quantity_elem.value);
-    const bike_img = bike_img_elem.files[0];
-
-    if (bike_quantity < 1) {
-        alert("Quantity must be at least 1.");
-        return;
-    }
-
-    // Check if registration number is unique
-    let existingBikes = JSON.parse(localStorage.getItem("Bike_Details")) || [];
-    let isUnique = !existingBikes.some(bike => bike.Registration_Number === bike_reg);
-
-    if (!isUnique) {
-        alert("Registration number already exists. Please enter a unique registration number.");
-        return;
-    }
+    const bike_model = document.getElementById("bike_model").value;
+    const bike_brand = document.getElementById("bike_brand").value;
+    const bike_year = document.getElementById("bike_year").value;
+    const bike_price = document.getElementById("bike_price").value;
+    const bike_reg_elems = document.querySelectorAll(".bike_reg");
+    const image = document.getElementById("image_input").files[0];
 
     const reader = new FileReader();
-    reader.onload = function(event) {
-        for (let i = 0; i < bike_quantity; i++) {
-            const bike_details = {
-                ID: Math.floor(Math.random() * (1000000 - 1)) + 1,
-                Type: bike_type,
+    reader.onloadend = function() {
+        let existingBikes = JSON.parse(localStorage.getItem("Bike_Details")) || [];
+        let existingRegs = existingBikes.map(bike => bike.Registration_Number);
+
+        for (let i = 0; i < bike_reg_elems.length; i++) {
+            const bike_reg = bike_reg_elems[i].value;
+
+            // Check for unique registration number
+            if (existingRegs.includes(bike_reg)) {
+                alert(`Registration Number ${bike_reg} already exists.`);
+                return; // Stop processing further if duplicate found
+            }
+
+            const newBike = {
+                ID: existingBikes.length + 1,
+                Image: reader.result,
+                Type: bike_model,
                 Brand: bike_brand,
                 Year: bike_year,
-                Registration_Number: bike_reg,
                 Rent: bike_price,
-                Status: 0,
-                Image: event.target.result
+                Quantity: 1, 
+                Registration_Number: bike_reg,
             };
 
-            let create_bike = JSON.parse(localStorage.getItem("Bike_Details")) || [];
-            create_bike.push(bike_details);
-            localStorage.setItem("Bike_Details", JSON.stringify(create_bike));
+            existingBikes.push(newBike);
         }
 
-        document.getElementById("bike_form").style.display = "none";
+        localStorage.setItem("Bike_Details", JSON.stringify(existingBikes));
+
         displayBikes();
+        document.getElementById("bike_form").style.display = "none";
     };
-    reader.readAsDataURL(bike_img);
+
+    reader.readAsDataURL(image);
+}
+
+function deleteData(id) {
+    let existingBikes = JSON.parse(localStorage.getItem("Bike_Details")) || [];
+    existingBikes = existingBikes.filter(bike => bike.ID !== id);
+    localStorage.setItem("Bike_Details", JSON.stringify(existingBikes));
+    displayBikes();
+}
+
+function updateData(id) {
+    console.log("Update button clicked for ID:", id);
+    sessionStorage.setItem("ID", id);
+    window.location.href = "update_bike.html";
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            
+        };
+        reader.readAsDataURL(file);
+    }
 }
 
 function displayBikes() {
-    const display = JSON.parse(localStorage.getItem("Bike_Details")) || [];
+    let bike = JSON.parse(localStorage.getItem("Bike_Details")) || [];
+
     let table = `
         <table>  
             <tr>
@@ -147,24 +175,11 @@ function displayBikes() {
                 <th>Year</th>
                 <th>Registration No</th>
                 <th>Rent</th>
-                <th>Quantity</th>
+                
                 <th>Action</th>
             </tr>`;
 
-    let bikeCount = {};
-    for (const data of display) {
-        let bikeKey = `${data.Type}-${data.Brand}-${data.Year}-${data.Registration_Number}`;
-        if (!bikeCount[bikeKey]) {
-            bikeCount[bikeKey] = {
-                ...data,
-                Quantity: 0
-            };
-        }
-        bikeCount[bikeKey].Quantity++;
-    }
-
-    for (const key in bikeCount) {
-        const data = bikeCount[key];
+    for (const data of bike) {
         table += `
             <tr>
                 <td>${data.ID}</td>
@@ -174,10 +189,10 @@ function displayBikes() {
                 <td>${data.Year}</td>
                 <td>${data.Registration_Number}</td>
                 <td>${data.Rent}</td>
-                <td>${data.Quantity}</td>
+              
                 <td>
-                    <button onclick="updateData(${data.ID})" >Update</button>
-                    <button onclick="deleteData(${data.ID})" style="background-color: #d9534f; color: white;">Delete</button>
+                    <button id="upd_btn" onclick="updateData(${data.ID})">Update</button>
+                    <button id="dlt_btn" onclick="deleteData(${data.ID})">Delete</button>
                 </td>
             </tr>`;
     }
@@ -185,14 +200,12 @@ function displayBikes() {
     table += `</table>`;
     document.getElementById("Bike_table").innerHTML = table;
 }
-function deleteData(id) {
-    let bike = JSON.parse(localStorage.getItem("Bike_Details")) || [];
-    bike = bike.filter(item => item.ID !== id); 
-    localStorage.setItem("Bike_Details", JSON.stringify(bike));
-    displayBikes();
-}
 
-function updateData(id) {
-    sessionStorage.setItem("ID", id);
-    window.location.href = "update_bike.html";
-}
+
+
+
+
+
+
+
+
