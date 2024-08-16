@@ -80,3 +80,8 @@ tr:hover {
         font-size: 10px;
     }
 }
+
+#declinebtn{
+    background-color: red;
+    color:white;
+}

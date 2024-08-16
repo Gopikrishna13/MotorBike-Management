@@ -32,8 +32,8 @@ function renderTable() {
                     <div class="action" data-id="${details.RequestID}">`
                         if (details.Status == 0) {
                             table += `
-                                <button class="action-btn" onclick="AcceptRequest(${details.RequestID})">Accept</button>
-                                <button class="action-btn" onclick="DeclineRequest(${details.RequestID})">Decline</button>`;
+                                <button class="action-btn" onclick="AcceptRequest(${details.RequestID})" >Accept</button>
+                                <button class="action-btn"id="declinebtn" onclick="DeclineRequest(${details.RequestID})"style:background-color:red"">Decline</button>`;
                         } else if (details.Status == 1) {
                             table += `Accepted`;
                         } else if (details.Status == -1) {
