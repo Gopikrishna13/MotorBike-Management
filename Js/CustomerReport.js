@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function displayCustomerReport() {
     const customers = JSON.parse(localStorage.getItem("User_Details")) || [];
+    const storedBikes = JSON.parse(localStorage.getItem("Stored_Bike_Details")) || [];
+
     let table = `
         <table>  
             <tr>
@@ -11,15 +13,15 @@ function displayCustomerReport() {
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Rental History(Bike ID)</th>
+                <th>Rental History (Bike ID)</th>
             </tr>`;
 
     for (const customer of customers) {
-        const rentals = JSON.parse(localStorage.getItem("Request_Info")) || [];
-      
-        const customerRentals = rentals.filter(rental => rental.User === customer.UserName);
+        // Filter stored bike details by the current customer
+        const customerRentals = storedBikes.filter(bike => bike.User === customer.UserName);
        
-        const rentalHistory = customerRentals.map(rental => `${rental.BikeID} (${rental.From} to ${rental.Return})`).join('<br>');
+        // Map each rental to a string with BikeID and rental period
+        const rentalHistory = customerRentals.map(bike => `${bike.BikeID} (from ${bike.From} to ${bike.To})`).join('<br>');
 
         table += `
             <tr>
@@ -27,7 +29,7 @@ function displayCustomerReport() {
                 <td>${customer.UserName}</td>
                 <td>${customer.Email}</td>
                 <td>${customer.Mobile}</td>
-                <td>${rentalHistory}</td>
+                <td>${rentalHistory || 'No Rentals'}</td>
             </tr>`;
     }
 
