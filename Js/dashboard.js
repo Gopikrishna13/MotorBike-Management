@@ -7,7 +7,7 @@ const availablebikes = JSON.parse(localStorage.getItem("Bike_Details")) || [];
 
 const returned_bikes = JSON.parse(localStorage.getItem("Stored_Bike_Details")) || [];
 const bikes_in = availablebikes.filter(bike => bike.Status == 0);
-const distinctBike = [...new Set(bookedRequest.map(req => req.BikeID))];
+const distinctBike = new Set(bookedRequest.map(req => req.BikeID)).size;
 let totalIncome = 0;
 
 

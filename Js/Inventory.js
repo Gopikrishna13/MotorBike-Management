@@ -37,6 +37,13 @@ function generateRegNumberFields() {
         input.required = true;
         input.className = "bike_reg";
         container.appendChild(input);
+		
+	    const input_year = document.createElement("input");
+		input_year.placeholder="Year";
+        input_year.type = "text";
+        input_year.required = true;
+        input_year.className = "bike_year";
+        container.appendChild(input_year);
 
         container.appendChild(document.createElement("br"));
         container.appendChild(document.createElement("br"));
@@ -73,7 +80,7 @@ function searchBike() {
 
     for (const data of bike) {
         table += `
-            <tr>
+            <tr style="background-color: white;">
                 <td>${data.ID}</td>
                 <td><img src="${data.Image}" width="50"></td>
                 <td>${data.Type}</td>
@@ -96,7 +103,7 @@ function searchBike() {
 function createBike() {
     const bike_model = document.getElementById("bike_model").value;
     const bike_brand = document.getElementById("bike_brand").value;
-    const bike_year = document.getElementById("bike_year").value;
+    const bike_year_elems = document.querySelectorAll(".bike_year");
     const bike_price = document.getElementById("bike_price").value;
     const bike_reg_elems = document.querySelectorAll(".bike_reg");
     const image = document.getElementById("image_input").files[0];
@@ -108,6 +115,7 @@ function createBike() {
 
         for (let i = 0; i < bike_reg_elems.length; i++) {
             const bike_reg = bike_reg_elems[i].value;
+			const bike_year=bike_year_elems[i].value;
 
             // Check for unique registration number
             if (existingRegs.includes(bike_reg)) {
@@ -123,6 +131,7 @@ function createBike() {
                 Year: bike_year,
                 Rent: bike_price,
                 Quantity: 1, 
+				Status:0,
                 Registration_Number: bike_reg,
             };
 

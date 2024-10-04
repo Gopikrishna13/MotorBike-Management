@@ -1,4 +1,8 @@
 /* General Table Styles */
+
+/* *{
+    background-color: rgba(0, 0, 0, 0.719);
+} */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -21,7 +25,7 @@ tr:nth-child(even) {
 
 /* Button Styles */
 #search_btn {
-    background-color: rgb(0, 110, 255);
+    background-color: rgb(255, 174, 0);
     color: white;
     padding: 8px 16px;
     border: none;
@@ -30,11 +34,11 @@ tr:nth-child(even) {
 }
 
 #search_btn:hover {
-    background-color: rgb(0, 90, 220);
+    background-color: rgb(255, 208, 0);
 }
 
 #return {
-    background-color: green;
+    background-color: rgb(255, 208, 0);
     color: wheat;
     padding: 8px 16px;
     border: none;
@@ -43,7 +47,7 @@ tr:nth-child(even) {
 }
 
 #return:hover {
-    background-color: darkgreen;
+    background-color: rgb(255, 196, 0);
 }
 
 /* Media Queries for Responsiveness */

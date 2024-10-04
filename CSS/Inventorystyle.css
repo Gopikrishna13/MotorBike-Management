@@ -1,6 +1,8 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
+    background: url(../590289-bike-black-wallpaper.jpg);
+    /* background-size: cover; */
 }
 
 form {
@@ -57,6 +59,12 @@ th {
     background-color: black;
     color: white;
 }
+
+tr{
+	 background-color: black;
+    color: white;
+}
+
 
 tr:hover {
     background-color: #ddd;
